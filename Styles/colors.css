@@ -1,0 +1,27 @@
+:root {
+	/* base palette */
+	--c-paper: #F2F3EF;
+	--c-paper-100: #E8EAE4;
+	--c-ink: #17191C;
+	--c-graphite: #5B6168;
+	--c-rule: #D8DBD3;
+
+	/* accent — links, focus and selection only */
+	--c-accent: #3B2FD9;
+	--c-accent-tint: #E4E2FA;
+
+	/* placeholder tints for project covers */
+	--c-cover-1: #DCE3DE;
+	--c-cover-2: #E1DEE8;
+	--c-cover-3: #E6E2DA;
+}
+
+/* text colour classes — they read from the tokens, so a colour is changed in one place */
+.c-ink { color: var(--c-ink); }
+.c-graphite { color: var(--c-graphite); }
+.c-accent { color: var(--c-accent); }
+
+/* background colour classes */
+.bg-paper { background-color: var(--c-paper); }
+.bg-paper-100 { background-color: var(--c-paper-100); }
+.bg-ink { background-color: var(--c-ink); color: var(--c-paper); }

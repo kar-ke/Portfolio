@@ -1,0 +1,46 @@
+:root {
+	--ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+	--ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+	--dur-fast: 0.2s;
+	--dur-default: 0.35s;
+	--dur-slow: 0.6s;
+
+	--fast-trans: var(--dur-fast) var(--ease-out);
+	--default-trans: var(--dur-default) var(--ease-out);
+	--slow-trans: var(--dur-slow) var(--ease-out);
+}
+
+/* Elements hidden before GSAP animates them in.
+   .js is added in <head>, so without JavaScript everything stays visible. */
+.js [data-reveal] { opacity: 0; }
+
+/* page transition panel */
+.page-curtain {
+	position: fixed;
+	inset: 0;
+	z-index: var(--layer-4);
+	background-color: var(--c-ink);
+	transform: translateY(100%);
+	visibility: hidden;
+	pointer-events: none;
+}
+
+/* set in <head> when arriving from another page, so there's no flash before the curtain lifts */
+.is-arriving .page-curtain {
+	transform: translateY(0);
+	visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+
+	.js [data-reveal] { opacity: 1; }
+	.page-curtain { display: none; }
+}

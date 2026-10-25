@@ -1,0 +1,43 @@
+.hero {
+	padding-top: clamp(48px, 10vh, 120px);
+	padding-bottom: var(--space-7);
+}
+
+/* the stretching name — Motion.js animates font-stretch on this */
+.hero-name {
+	display: block;
+	white-space: nowrap;
+	will-change: font-stretch;
+}
+
+.hero-intro {
+	max-width: 30ch;
+	margin-top: var(--space-6);
+}
+
+.hero-meta {
+	margin-top: var(--space-5);
+	color: var(--c-graphite);
+}
+
+.status-dot {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	margin-right: var(--space-2);
+	border-radius: var(--br-full);
+	background-color: #2E9E61;
+	vertical-align: middle;
+}
+
+/* smaller page hero (about, blog, playground) */
+.page-hero {
+	padding-top: clamp(40px, 8vh, 96px);
+	padding-bottom: var(--space-6);
+}
+
+.page-hero .lead {
+	max-width: 40ch;
+	margin-top: var(--space-4);
+	color: var(--c-graphite);
+}

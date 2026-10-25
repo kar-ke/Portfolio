@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Rethinking onboarding for a payments app — Your Name</title>
+		<meta name="description" content="Cut the sign-up flow from 11 steps to 4 and lifted completion for first-time users." />
+		<meta name="author" content="Your Name" />
+		<meta name="theme-color" content="#F2F3EF" />
+		<link rel="canonical" href="https://yourname.com/work/project-one" />
+
+		<!-- social preview -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Rethinking onboarding for a payments app — Your Name" />
+		<meta property="og:description" content="Cut the sign-up flow from 11 steps to 4 and lifted completion for first-time users." />
+		<meta property="og:image" content="https://yourname.com/Assets/images/og-image.png" />
+		<meta name="twitter:card" content="summary_large_image" />
+
+		<!-- marks JS as available, and covers the page if arriving through a page transition -->
+		<script>
+			document.documentElement.classList.add("js");
+			try {
+				if (sessionStorage.getItem("curtain") === "1" && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+					document.documentElement.classList.add("is-arriving");
+				}
+			} catch (e) {}
+		</script>
+
+		<!-- font: preloaded so the name renders in the right face straight away -->
+		<link rel="preload" href="/Assets/Fonts/BricolageGrotesque-Variable.woff2" as="font" type="font/woff2" crossorigin />
+
+		<!-- styles -->
+		<link rel="stylesheet" href="/Styles/font.css" />
+		<link rel="stylesheet" href="/Styles/colors.css" />
+		<link rel="stylesheet" href="/Styles/global.css" />
+		<link rel="stylesheet" href="/Styles/typography.css" />
+		<link rel="stylesheet" href="/Styles/flex.css" />
+		<link rel="stylesheet" href="/Styles/style-bits.css" />
+		<link rel="stylesheet" href="/Styles/button.css" />
+		<link rel="stylesheet" href="/Styles/animation.css" />
+		<link rel="stylesheet" href="/Styles/Components/Header.css" />
+		<link rel="stylesheet" href="/Styles/Components/Footer.css" />
+		<link rel="stylesheet" href="/Styles/Components/Hero.css" />
+		<link rel="stylesheet" href="/Styles/Components/Work.css" />
+		<link rel="stylesheet" href="/Styles/Components/CaseStudy.css" />
+		<link rel="stylesheet" href="/Styles/responsive.css" />
+
+		<!-- favicon -->
+		<link rel="icon" href="/Assets/icons/favicon.svg" type="image/svg+xml" />
+
+		<!-- scripts (deferred, so they never block the page from showing) -->
+		<script src="/Scripts/analytics.js" defer></script>
+		<script src="/Scripts/vendor/gsap.min.js" defer></script>
+		<script src="/Scripts/vendor/ScrollTrigger.min.js" defer></script>
+		<script src="/Scripts/Script.js" defer></script>
+		<script src="/Scripts/Motion.js" defer></script>
+	</head>
+	<body>
+		<a href="#main" class="skip-link">Skip to content</a>
+		<div class="page-curtain" aria-hidden="true"></div>
+
+		<header class="site-header">
+			<div class="container header-inner">
+				<a href="/" class="logo">Your Name</a>
+
+				<button class="menu-button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+					<span class="menu-button-lines"></span>
+				</button>
+
+				<nav class="site-nav" id="site-nav" aria-label="Main">
+					<ul class="nav-list">
+						<li><a href="/" class="nav-link" data-section="/">Work</a></li>
+						<li><a href="/about" class="nav-link" data-section="/about">About</a></li>
+						<li><a href="/playground" class="nav-link" data-section="/playground">Playground</a></li>
+						<li><a href="/blog/" class="nav-link" data-section="/blog">Writing</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+		<main id="main">
+			<article>
+				<header class="container case-hero">
+					<p class="small-text c-graphite mb24" data-reveal>Company name, 2025</p>
+					<h1 class="display-lg" data-reveal>Rethinking onboarding for a payments app</h1>
+					<p class="lead case-summary" data-reveal>Cut the sign-up flow from 11 steps to 4 and lifted completion for first-time users.</p>
+
+					<dl class="case-facts" data-reveal>
+						<div class="case-fact"><dt>Role</dt><dd>Lead product designer</dd></div>
+						<div class="case-fact"><dt>Team</dt><dd>1 PM, 4 engineers</dd></div>
+						<div class="case-fact"><dt>Timeline</dt><dd>4 months</dd></div>
+						<div class="case-fact"><dt>Tools</dt><dd>Figma, Maze</dd></div>
+					</dl>
+				</header>
+
+				<div class="container">
+					<div class="case-cover" data-cover>
+						<img src="/Assets/projects/project-one/cover.svg" alt="Rethinking onboarding for a payments app — cover image" width="1600" height="900" fetchpriority="high" />
+					</div>
+				</div>
+
+			<section class="container case-section rule-top">
+				<h2 class="title-lg case-section-heading">The problem</h2>
+				<div class="prose body-text" data-reveal>
+							<p>Describe the situation before you got involved. Who were the users, what were they trying to do, and what was getting in their way? Use one real number if you have it.</p>
+							<p>Keep this short. A recruiter should understand the stakes within two sentences.</p>
+				</div>
+			</section>
+
+			<section class="container case-section rule-top">
+				<h2 class="title-lg case-section-heading">My role</h2>
+				<div class="prose body-text" data-reveal>
+							<p>Say exactly what you owned: research, flows, visual design, prototyping, the design system, stakeholder alignment. Name who you worked with.</p>
+				</div>
+			</section>
+
+			<section class="container case-section rule-top">
+				<h2 class="title-lg case-section-heading">Research and insight</h2>
+				<div class="prose body-text" data-reveal>
+							<p>What did you learn, and how? Interviews, analytics, usability tests, support tickets. Lead with the insight, then the evidence.</p>
+							<blockquote>Pull out one line from research that changed the direction of the project.</blockquote>
+							<figure class="case-image" data-reveal>
+								<img src="/Assets/projects/project-one/image-1.svg" alt="Describe what this image shows" width="1600" height="1000" loading="lazy" />
+								<figcaption>Caption that explains what the reader should notice.</figcaption>
+							</figure>
+				</div>
+			</section>
+
+			<section class="container case-section rule-top">
+				<h2 class="title-lg case-section-heading">Exploring options</h2>
+				<div class="prose body-text" data-reveal>
+							<p>Show two or three directions you considered and why you chose one. This is where reviewers see how you think.</p>
+							<div class="case-image-pair" data-reveal>
+								<figure class="case-image">
+									<img src="/Assets/projects/project-one/image-2.svg" alt="Describe option A" width="1000" height="1000" loading="lazy" />
+									<figcaption>Option A</figcaption>
+								</figure>
+								<figure class="case-image">
+									<img src="/Assets/projects/project-one/image-3.svg" alt="Describe option B" width="1000" height="1000" loading="lazy" />
+									<figcaption>Option B</figcaption>
+								</figure>
+							</div>
+				</div>
+			</section>
+
+			<section class="container case-section rule-top">
+				<h2 class="title-lg case-section-heading">The solution</h2>
+				<div class="prose body-text" data-reveal>
+							<p>Walk through the final design. Show the key screens and explain the decisions that matter most, not every screen.</p>
+							<figure class="case-image" data-reveal>
+								<img src="/Assets/projects/project-one/image-4.svg" alt="Describe the final design" width="1600" height="1000" loading="lazy" />
+								<figcaption>Final design.</figcaption>
+							</figure>
+				</div>
+			</section>
+
+			<section class="container case-section rule-top">
+				<h2 class="title-lg case-section-heading">What I learned</h2>
+				<div class="prose body-text" data-reveal>
+							<p>One or two honest reflections: what you would do differently, or what you're taking into the next project.</p>
+				</div>
+			</section>
+
+				<section class="container case-section rule-top">
+					<h2 class="title-lg case-section-heading">Results</h2>
+					<div class="case-results">
+						<div data-reveal>
+							<p class="case-result-value">+38%</p>
+							<p class="case-result-label">sign-up completion</p>
+						</div>
+						<div data-reveal>
+							<p class="case-result-value">4 of 11</p>
+							<p class="case-result-label">steps kept</p>
+						</div>
+						<div data-reveal>
+							<p class="case-result-value">−52%</p>
+							<p class="case-result-label">support tickets in week one</p>
+						</div>
+					</div>
+				</section>
+			</article>
+
+			<div class="container">
+				<a href="/work/project-two" class="next-project">
+					<p class="small-text c-graphite mb16">Next case study</p>
+					<p class="display-lg next-project-title">A design system for six product teams</p>
+				</a>
+			</div>
+		</main>
+
+		<footer class="site-footer">
+			<div class="container">
+				<p class="lead footer-prompt mb24">Have a product that needs a designer?</p>
+				<a href="mailto:hello@yourname.com" class="footer-email">hello@yourname.com</a>
+
+				<ul class="footer-links mt64">
+					<li><a href="https://www.linkedin.com/in/yourname" class="text-link" target="_blank" rel="noopener">LinkedIn</a></li>
+					<li><a href="https://dribbble.com/yourname" class="text-link" target="_blank" rel="noopener">Dribbble</a></li>
+					<li><a href="https://www.behance.net/yourname" class="text-link" target="_blank" rel="noopener">Behance</a></li>
+					<li><a href="/Assets/resume.pdf" class="text-link" target="_blank" rel="noopener">Resume (PDF)</a></li>
+				</ul>
+
+				<div class="footer-bottom flex justify-between flex-wrap g16 small-text">
+					<p>&copy; <span data-year>2026</span> Your Name</p>
+					<p>Designed and built by hand</p>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>

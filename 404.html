@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Page not found — Your Name</title>
+		<meta name="description" content="This page doesn't exist." />
+		<meta name="author" content="Your Name" />
+		<meta name="theme-color" content="#F2F3EF" />
+		<link rel="canonical" href="https://yourname.com/404" />
+
+		<!-- social preview -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Page not found — Your Name" />
+		<meta property="og:description" content="This page doesn't exist." />
+		<meta property="og:image" content="https://yourname.com/Assets/images/og-image.png" />
+		<meta name="twitter:card" content="summary_large_image" />
+
+		<!-- marks JS as available, and covers the page if arriving through a page transition -->
+		<script>
+			document.documentElement.classList.add("js");
+			try {
+				if (sessionStorage.getItem("curtain") === "1" && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+					document.documentElement.classList.add("is-arriving");
+				}
+			} catch (e) {}
+		</script>
+
+		<!-- font: preloaded so the name renders in the right face straight away -->
+		<link rel="preload" href="/Assets/Fonts/BricolageGrotesque-Variable.woff2" as="font" type="font/woff2" crossorigin />
+
+		<!-- styles -->
+		<link rel="stylesheet" href="/Styles/font.css" />
+		<link rel="stylesheet" href="/Styles/colors.css" />
+		<link rel="stylesheet" href="/Styles/global.css" />
+		<link rel="stylesheet" href="/Styles/typography.css" />
+		<link rel="stylesheet" href="/Styles/flex.css" />
+		<link rel="stylesheet" href="/Styles/style-bits.css" />
+		<link rel="stylesheet" href="/Styles/button.css" />
+		<link rel="stylesheet" href="/Styles/animation.css" />
+		<link rel="stylesheet" href="/Styles/Components/Header.css" />
+		<link rel="stylesheet" href="/Styles/Components/Footer.css" />
+		<link rel="stylesheet" href="/Styles/Components/Hero.css" />
+		<link rel="stylesheet" href="/Styles/responsive.css" />
+
+		<!-- favicon -->
+		<link rel="icon" href="/Assets/icons/favicon.svg" type="image/svg+xml" />
+
+		<!-- scripts (deferred, so they never block the page from showing) -->
+		<script src="/Scripts/analytics.js" defer></script>
+		<script src="/Scripts/vendor/gsap.min.js" defer></script>
+		<script src="/Scripts/vendor/ScrollTrigger.min.js" defer></script>
+		<script src="/Scripts/Script.js" defer></script>
+		<script src="/Scripts/Motion.js" defer></script>
+	</head>
+	<body>
+		<a href="#main" class="skip-link">Skip to content</a>
+		<div class="page-curtain" aria-hidden="true"></div>
+
+		<header class="site-header">
+			<div class="container header-inner">
+				<a href="/" class="logo">Your Name</a>
+
+				<button class="menu-button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+					<span class="menu-button-lines"></span>
+				</button>
+
+				<nav class="site-nav" id="site-nav" aria-label="Main">
+					<ul class="nav-list">
+						<li><a href="/" class="nav-link" data-section="/">Work</a></li>
+						<li><a href="/about" class="nav-link" data-section="/about">About</a></li>
+						<li><a href="/playground" class="nav-link" data-section="/playground">Playground</a></li>
+						<li><a href="/blog/" class="nav-link" data-section="/blog">Writing</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+		<main id="main">
+			<section class="container page-hero section-lg">
+				<h1 class="display-lg" data-reveal>This page doesn't exist</h1>
+				<p class="lead" data-reveal>The link may be old, or the address may have a typo.</p>
+				<div class="mt40" data-reveal><a href="/" class="btn btn-primary">Go to the home page</a></div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="container">
+				<p class="lead footer-prompt mb24">Have a product that needs a designer?</p>
+				<a href="mailto:hello@yourname.com" class="footer-email">hello@yourname.com</a>
+
+				<ul class="footer-links mt64">
+					<li><a href="https://www.linkedin.com/in/yourname" class="text-link" target="_blank" rel="noopener">LinkedIn</a></li>
+					<li><a href="https://dribbble.com/yourname" class="text-link" target="_blank" rel="noopener">Dribbble</a></li>
+					<li><a href="https://www.behance.net/yourname" class="text-link" target="_blank" rel="noopener">Behance</a></li>
+					<li><a href="/Assets/resume.pdf" class="text-link" target="_blank" rel="noopener">Resume (PDF)</a></li>
+				</ul>
+
+				<div class="footer-bottom flex justify-between flex-wrap g16 small-text">
+					<p>&copy; <span data-year>2026</span> Your Name</p>
+					<p>Designed and built by hand</p>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>

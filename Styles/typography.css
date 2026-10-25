@@ -1,0 +1,86 @@
+/* type scale (ratio ~1.333) — widths come from the variable font's width axis */
+
+.display-xl {
+	font-size: clamp(56px, 16.5vw, 232px);
+	font-weight: var(--fw-heavy);
+	font-stretch: 75%;
+	line-height: 0.86;
+	letter-spacing: -0.035em;
+}
+
+.display-lg {
+	font-size: clamp(44px, 7vw, 104px);
+	font-weight: var(--fw-bold);
+	font-stretch: 80%;
+	line-height: 0.95;
+	letter-spacing: -0.03em;
+}
+
+.title-xl {
+	font-size: clamp(32px, 4vw, 56px);
+	font-weight: var(--fw-semibold);
+	font-stretch: 88%;
+	line-height: 1.05;
+	letter-spacing: -0.02em;
+}
+
+.title-lg {
+	font-size: clamp(24px, 2.6vw, 34px);
+	font-weight: var(--fw-semibold);
+	font-stretch: 92%;
+	line-height: 1.15;
+	letter-spacing: -0.015em;
+}
+
+.title-md {
+	font-size: 22px;
+	font-weight: var(--fw-semibold);
+	line-height: 1.25;
+}
+
+.title-sm {
+	font-size: 17px;
+	font-weight: var(--fw-semibold);
+	line-height: 1.35;
+}
+
+.lead {
+	font-size: clamp(20px, 2vw, 26px);
+	font-weight: var(--fw-light);
+	line-height: 1.45;
+	letter-spacing: -0.005em;
+}
+
+.body-text { font-size: 17px; line-height: 1.65; }
+.small-text { font-size: 14px; line-height: 1.5; }
+
+/* long-form reading (case studies, posts) */
+.prose { max-width: 66ch; }
+.prose > * + * { margin-top: 1.1em; }
+.prose h2 { margin-top: 2.2em; }
+.prose h3 { margin-top: 1.8em; }
+.prose ul { padding-left: 1.1em; list-style: disc; }
+.prose ul li + li { margin-top: 0.4em; }
+.prose a { color: var(--c-accent); text-decoration: underline; text-underline-offset: 3px; }
+.prose blockquote {
+	padding-left: var(--space-4);
+	border-left: 2px solid var(--c-ink);
+	font-size: 22px;
+	font-weight: var(--fw-light);
+	line-height: 1.45;
+}
+
+/* text link with an underline that draws in on hover */
+.text-link {
+	background-image: linear-gradient(currentColor, currentColor);
+	background-size: 100% 1px;
+	background-position: 0 100%;
+	background-repeat: no-repeat;
+	transition: background-size var(--fast-trans), color var(--fast-trans);
+}
+
+.text-link:hover {
+	color: var(--c-accent);
+	background-size: 0% 1px;
+	background-position: 100% 100%;
+}

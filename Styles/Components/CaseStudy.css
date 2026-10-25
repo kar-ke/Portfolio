@@ -1,0 +1,106 @@
+.case-hero {
+	padding-top: clamp(40px, 8vh, 96px);
+	padding-bottom: var(--space-6);
+}
+
+.case-summary {
+	max-width: 40ch;
+	margin-top: var(--space-4);
+	color: var(--c-graphite);
+}
+
+/* role / team / timeline / tools */
+.case-facts {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: var(--space-4);
+	margin-top: var(--space-6);
+	padding-top: var(--space-4);
+	border-top: 1px solid var(--c-rule);
+}
+
+.case-fact dt {
+	margin-bottom: var(--space-1);
+	font-size: 14px;
+	color: var(--c-graphite);
+}
+
+.case-fact dd { font-weight: var(--fw-medium); }
+
+.case-cover {
+	overflow: hidden;
+	aspect-ratio: 16 / 9;
+	border-radius: var(--br-md);
+	background-color: var(--c-paper-100);
+}
+
+.case-cover img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* a case study section: heading on the left, writing on the right */
+.case-section {
+	display: grid;
+	grid-template-columns: 4fr 8fr;
+	gap: var(--space-5);
+	padding-block: var(--space-7);
+}
+
+.case-section-heading {
+	position: sticky;
+	top: calc(var(--h-header) + var(--space-4));
+	align-self: start;
+}
+
+.case-image {
+	overflow: hidden;
+	border-radius: var(--br-md);
+	background-color: var(--c-paper-100);
+}
+
+.case-image figcaption {
+	padding: var(--space-3) 0 0;
+	font-size: 14px;
+	color: var(--c-graphite);
+	background-color: var(--c-paper);
+}
+
+.case-image-pair {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--space-4);
+}
+
+/* outcome numbers */
+.case-results {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: var(--space-4);
+}
+
+.case-result-value {
+	font-size: clamp(40px, 5vw, 72px);
+	font-weight: var(--fw-bold);
+	font-stretch: 78%;
+	line-height: 1;
+	letter-spacing: -0.03em;
+}
+
+.case-result-label {
+	margin-top: var(--space-2);
+	color: var(--c-graphite);
+}
+
+@media screen and (max-width: 992px) {
+	.case-section { grid-template-columns: 1fr; gap: var(--space-4); }
+	.case-section-heading { position: static; }
+}
+
+@media screen and (max-width: 768px) {
+	.case-facts { grid-template-columns: repeat(2, 1fr); }
+	.case-results { grid-template-columns: 1fr; }
+	.case-image-pair { grid-template-columns: 1fr; }
+	.case-section { padding-block: var(--space-6); }
+}

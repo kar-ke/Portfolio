@@ -1,0 +1,28 @@
+.btn {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
+	padding: 14px 22px;
+	font-size: 16px;
+	font-weight: var(--fw-medium);
+	border-radius: var(--br-full);
+	transition: background-color var(--fast-trans), color var(--fast-trans), transform var(--fast-trans);
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+	background-color: var(--c-ink);
+	color: var(--c-paper);
+}
+
+.btn-primary:hover { background-color: var(--c-accent); }
+
+.btn-outline {
+	border: 1px solid var(--c-ink);
+}
+
+.btn-outline:hover {
+	background-color: var(--c-ink);
+	color: var(--c-paper);
+}

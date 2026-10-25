@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>About — Your Name</title>
+		<meta name="description" content="About Your Name, product designer: background, experience and how I work." />
+		<meta name="author" content="Your Name" />
+		<meta name="theme-color" content="#F2F3EF" />
+		<link rel="canonical" href="https://yourname.com/about" />
+
+		<!-- social preview -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="About — Your Name" />
+		<meta property="og:description" content="About Your Name, product designer: background, experience and how I work." />
+		<meta property="og:image" content="https://yourname.com/Assets/images/og-image.png" />
+		<meta name="twitter:card" content="summary_large_image" />
+
+		<!-- marks JS as available, and covers the page if arriving through a page transition -->
+		<script>
+			document.documentElement.classList.add("js");
+			try {
+				if (sessionStorage.getItem("curtain") === "1" && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+					document.documentElement.classList.add("is-arriving");
+				}
+			} catch (e) {}
+		</script>
+
+		<!-- font: preloaded so the name renders in the right face straight away -->
+		<link rel="preload" href="/Assets/Fonts/BricolageGrotesque-Variable.woff2" as="font" type="font/woff2" crossorigin />
+
+		<!-- styles -->
+		<link rel="stylesheet" href="/Styles/font.css" />
+		<link rel="stylesheet" href="/Styles/colors.css" />
+		<link rel="stylesheet" href="/Styles/global.css" />
+		<link rel="stylesheet" href="/Styles/typography.css" />
+		<link rel="stylesheet" href="/Styles/flex.css" />
+		<link rel="stylesheet" href="/Styles/style-bits.css" />
+		<link rel="stylesheet" href="/Styles/button.css" />
+		<link rel="stylesheet" href="/Styles/animation.css" />
+		<link rel="stylesheet" href="/Styles/Components/Header.css" />
+		<link rel="stylesheet" href="/Styles/Components/Footer.css" />
+		<link rel="stylesheet" href="/Styles/Components/Hero.css" />
+		<link rel="stylesheet" href="/Styles/Components/About.css" />
+		<link rel="stylesheet" href="/Styles/responsive.css" />
+
+		<!-- favicon -->
+		<link rel="icon" href="/Assets/icons/favicon.svg" type="image/svg+xml" />
+
+		<!-- scripts (deferred, so they never block the page from showing) -->
+		<script src="/Scripts/analytics.js" defer></script>
+		<script src="/Scripts/vendor/gsap.min.js" defer></script>
+		<script src="/Scripts/vendor/ScrollTrigger.min.js" defer></script>
+		<script src="/Scripts/Script.js" defer></script>
+		<script src="/Scripts/Motion.js" defer></script>
+	</head>
+	<body>
+		<a href="#main" class="skip-link">Skip to content</a>
+		<div class="page-curtain" aria-hidden="true"></div>
+
+		<header class="site-header">
+			<div class="container header-inner">
+				<a href="/" class="logo">Your Name</a>
+
+				<button class="menu-button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+					<span class="menu-button-lines"></span>
+				</button>
+
+				<nav class="site-nav" id="site-nav" aria-label="Main">
+					<ul class="nav-list">
+						<li><a href="/" class="nav-link" data-section="/">Work</a></li>
+						<li><a href="/about" class="nav-link" data-section="/about">About</a></li>
+						<li><a href="/playground" class="nav-link" data-section="/playground">Playground</a></li>
+						<li><a href="/blog/" class="nav-link" data-section="/blog">Writing</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+		<main id="main">
+			<section class="container page-hero">
+				<div class="row align-end">
+					<div class="col-7 col-md-12">
+						<h1 class="display-lg" data-reveal>I design products people stop noticing, because they just work.</h1>
+						<p class="lead" data-reveal>Replace this with two or three sentences about you: what you design, who for, and what you care about.</p>
+					</div>
+					<div class="col-4 offset-1 col-md-12 offset-md-0">
+						<div class="about-portrait" data-reveal>
+							<img src="/Assets/images/portrait.svg" alt="Portrait of Your Name" width="800" height="1000" fetchpriority="high" />
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="container section rule-top">
+				<div class="row">
+					<div class="col-4 col-lg-12"><h2 class="title-lg mb24">How I work</h2></div>
+					<div class="col-8 col-lg-12 prose body-text" data-reveal>
+						<p>Describe your process in your own words. What do you do in the first week of a project? How do you work with engineers and PMs?</p>
+						<p>Mention the kinds of problems you enjoy most, and what teammates say you're good at.</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="container section rule-top">
+				<div class="row">
+					<div class="col-4 col-lg-12"><h2 class="title-lg mb24">Experience</h2></div>
+					<div class="col-8 col-lg-12">
+						<ul class="experience-list" data-reveal>
+							<li class="experience-row"><span>2024 – now</span><span>Senior product designer</span><span>Company name</span></li>
+							<li class="experience-row"><span>2021 – 2024</span><span>Product designer</span><span>Company name</span></li>
+							<li class="experience-row"><span>2019 – 2021</span><span>UI/UX designer</span><span>Company name</span></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<section class="container section rule-top">
+				<div class="row">
+					<div class="col-4 col-lg-12"><h2 class="title-lg mb24">What I do</h2></div>
+					<div class="col-8 col-lg-12">
+						<div class="skill-groups" data-reveal>
+							<div>
+								<h3 class="title-sm mb16">Research</h3>
+								<ul class="c-graphite"><li>User interviews</li><li>Usability testing</li><li>Journey mapping</li></ul>
+							</div>
+							<div>
+								<h3 class="title-sm mb16">Design</h3>
+								<ul class="c-graphite"><li>Product strategy</li><li>Interaction design</li><li>Design systems</li></ul>
+							</div>
+							<div>
+								<h3 class="title-sm mb16">Build</h3>
+								<ul class="c-graphite"><li>Prototyping</li><li>HTML and CSS</li><li>Developer handoff</li></ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="container">
+				<p class="lead footer-prompt mb24">Have a product that needs a designer?</p>
+				<a href="mailto:hello@yourname.com" class="footer-email">hello@yourname.com</a>
+
+				<ul class="footer-links mt64">
+					<li><a href="https://www.linkedin.com/in/yourname" class="text-link" target="_blank" rel="noopener">LinkedIn</a></li>
+					<li><a href="https://dribbble.com/yourname" class="text-link" target="_blank" rel="noopener">Dribbble</a></li>
+					<li><a href="https://www.behance.net/yourname" class="text-link" target="_blank" rel="noopener">Behance</a></li>
+					<li><a href="/Assets/resume.pdf" class="text-link" target="_blank" rel="noopener">Resume (PDF)</a></li>
+				</ul>
+
+				<div class="footer-bottom flex justify-between flex-wrap g16 small-text">
+					<p>&copy; <span data-year>2026</span> Your Name</p>
+					<p>Designed and built by hand</p>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>

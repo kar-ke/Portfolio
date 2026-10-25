@@ -1,0 +1,21 @@
+/* One variable font file covers every weight (200–800) and width (75–100%) */
+@font-face {
+	font-family: "Bricolage";
+	src: url("/Assets/Fonts/BricolageGrotesque-Variable.woff2") format("woff2-variations");
+	font-weight: 200 800;
+	font-stretch: 75% 100%;
+	font-style: normal;
+	font-display: swap;
+}
+
+:root {
+	--font-base: "Bricolage", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+	/* weights */
+	--fw-light: 300;
+	--fw-regular: 400;
+	--fw-medium: 500;
+	--fw-semibold: 600;
+	--fw-bold: 700;
+	--fw-heavy: 800;
+}

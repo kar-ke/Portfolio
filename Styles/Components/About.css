@@ -1,0 +1,40 @@
+.about-portrait {
+	overflow: hidden;
+	aspect-ratio: 4 / 5;
+	border-radius: var(--br-md);
+	background-color: var(--c-paper-100);
+}
+
+.about-portrait img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* experience timeline */
+.experience-list { border-top: 1px solid var(--c-rule); }
+
+.experience-row {
+	display: grid;
+	grid-template-columns: 3fr 5fr 4fr;
+	gap: var(--space-4);
+	padding-block: var(--space-4);
+	border-bottom: 1px solid var(--c-rule);
+}
+
+.experience-row span:first-child,
+.experience-row span:last-child { color: var(--c-graphite); }
+
+.skill-groups {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: var(--space-5);
+}
+
+.skill-groups li + li { margin-top: var(--space-1); }
+
+@media screen and (max-width: 768px) {
+	.experience-row { grid-template-columns: 1fr; gap: var(--space-1); }
+	.skill-groups { grid-template-columns: 1fr; }
+	.about-portrait { margin-top: var(--space-5); max-width: 420px; }
+}

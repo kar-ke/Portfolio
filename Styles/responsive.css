@@ -1,0 +1,50 @@
+/* 12-column grid — same naming as the Dashboard repo (desktop first) */
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	margin-inline: calc(var(--space-4) / -2);
+}
+
+.row > [class*="col-"] { padding-inline: calc(var(--space-4) / 2); }
+
+.col-1 { flex: 0 0 8.33%; width: 8.33%; }
+.col-2 { flex: 0 0 16.67%; width: 16.67%; }
+.col-3 { flex: 0 0 25%; width: 25%; }
+.col-4 { flex: 0 0 33.33%; width: 33.33%; }
+.col-5 { flex: 0 0 41.67%; width: 41.67%; }
+.col-6 { flex: 0 0 50%; width: 50%; }
+.col-7 { flex: 0 0 58.33%; width: 58.33%; }
+.col-8 { flex: 0 0 66.67%; width: 66.67%; }
+.col-9 { flex: 0 0 75%; width: 75%; }
+.col-10 { flex: 0 0 83.33%; width: 83.33%; }
+.col-11 { flex: 0 0 91.67%; width: 91.67%; }
+.col-12 { flex: 0 0 100%; width: 100%; }
+
+.offset-1 { margin-left: 8.33%; }
+.offset-2 { margin-left: 16.67%; }
+.offset-3 { margin-left: 25%; }
+.offset-4 { margin-left: 33.33%; }
+.offset-6 { margin-left: 50%; }
+
+@media screen and (max-width: 992px) {
+	.col-lg-4 { flex: 0 0 33.33%; width: 33.33%; }
+	.col-lg-6 { flex: 0 0 50%; width: 50%; }
+	.col-lg-8 { flex: 0 0 66.67%; width: 66.67%; }
+	.col-lg-12 { flex: 0 0 100%; width: 100%; }
+	.offset-lg-0 { margin-left: 0; }
+}
+
+@media screen and (max-width: 768px) {
+	.col-md-6 { flex: 0 0 50%; width: 50%; }
+	.col-md-12 { flex: 0 0 100%; width: 100%; }
+	.offset-md-0 { margin-left: 0; }
+
+	.section { padding-block: var(--space-6); }
+	.section-lg { padding-block: var(--space-7); }
+}
+
+@media screen and (max-width: 576px) {
+	body { font-size: 16px; }
+	.col-sm-12 { flex: 0 0 100%; width: 100%; }
+	.offset-sm-0 { margin-left: 0; }
+}

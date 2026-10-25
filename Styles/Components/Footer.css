@@ -1,0 +1,37 @@
+.site-footer {
+	padding-block: var(--space-7) var(--space-5);
+	background-color: var(--c-ink);
+	color: var(--c-paper);
+}
+
+.footer-prompt {
+	color: color-mix(in srgb, var(--c-paper) 65%, transparent);
+}
+
+.footer-email {
+	display: inline-block;
+	font-size: clamp(36px, 7.5vw, 112px);
+	font-weight: var(--fw-bold);
+	font-stretch: 75%;
+	line-height: 1;
+	letter-spacing: -0.03em;
+	word-break: break-word;
+	transition: font-stretch var(--slow-trans), color var(--fast-trans);
+}
+
+.footer-email:hover { font-stretch: 100%; }
+
+.footer-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-4);
+}
+
+.footer-bottom {
+	margin-top: var(--space-7);
+	padding-top: var(--space-4);
+	border-top: 1px solid color-mix(in srgb, var(--c-paper) 18%, transparent);
+	color: color-mix(in srgb, var(--c-paper) 65%, transparent);
+}
+
+.site-footer :focus-visible { outline-color: var(--c-paper); }

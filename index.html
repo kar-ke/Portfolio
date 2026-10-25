@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Your Name — Product designer</title>
+		<meta name="description" content="Product designer working on fintech and B2B products. Case studies, side projects and writing." />
+		<meta name="author" content="Your Name" />
+		<meta name="theme-color" content="#F2F3EF" />
+		<link rel="canonical" href="https://yourname.com/" />
+
+		<!-- social preview -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Your Name — Product designer" />
+		<meta property="og:description" content="Product designer working on fintech and B2B products. Case studies, side projects and writing." />
+		<meta property="og:image" content="https://yourname.com/Assets/images/og-image.png" />
+		<meta name="twitter:card" content="summary_large_image" />
+
+		<!-- marks JS as available, and covers the page if arriving through a page transition -->
+		<script>
+			document.documentElement.classList.add("js");
+			try {
+				if (sessionStorage.getItem("curtain") === "1" && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+					document.documentElement.classList.add("is-arriving");
+				}
+			} catch (e) {}
+		</script>
+
+		<!-- font: preloaded so the name renders in the right face straight away -->
+		<link rel="preload" href="/Assets/Fonts/BricolageGrotesque-Variable.woff2" as="font" type="font/woff2" crossorigin />
+
+		<!-- styles -->
+		<link rel="stylesheet" href="/Styles/font.css" />
+		<link rel="stylesheet" href="/Styles/colors.css" />
+		<link rel="stylesheet" href="/Styles/global.css" />
+		<link rel="stylesheet" href="/Styles/typography.css" />
+		<link rel="stylesheet" href="/Styles/flex.css" />
+		<link rel="stylesheet" href="/Styles/style-bits.css" />
+		<link rel="stylesheet" href="/Styles/button.css" />
+		<link rel="stylesheet" href="/Styles/animation.css" />
+		<link rel="stylesheet" href="/Styles/Components/Header.css" />
+		<link rel="stylesheet" href="/Styles/Components/Footer.css" />
+		<link rel="stylesheet" href="/Styles/Components/Hero.css" />
+		<link rel="stylesheet" href="/Styles/Components/Work.css" />
+		<link rel="stylesheet" href="/Styles/responsive.css" />
+
+		<!-- favicon -->
+		<link rel="icon" href="/Assets/icons/favicon.svg" type="image/svg+xml" />
+
+		<!-- scripts (deferred, so they never block the page from showing) -->
+		<script src="/Scripts/analytics.js" defer></script>
+		<script src="/Scripts/vendor/gsap.min.js" defer></script>
+		<script src="/Scripts/vendor/ScrollTrigger.min.js" defer></script>
+		<script src="/Scripts/Script.js" defer></script>
+		<script src="/Scripts/Motion.js" defer></script>
+	</head>
+	<body>
+		<a href="#main" class="skip-link">Skip to content</a>
+		<div class="page-curtain" aria-hidden="true"></div>
+
+		<header class="site-header">
+			<div class="container header-inner">
+				<a href="/" class="logo">Your Name</a>
+
+				<button class="menu-button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+					<span class="menu-button-lines"></span>
+				</button>
+
+				<nav class="site-nav" id="site-nav" aria-label="Main">
+					<ul class="nav-list">
+						<li><a href="/" class="nav-link" data-section="/">Work</a></li>
+						<li><a href="/about" class="nav-link" data-section="/about">About</a></li>
+						<li><a href="/playground" class="nav-link" data-section="/playground">Playground</a></li>
+						<li><a href="/blog/" class="nav-link" data-section="/blog">Writing</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+		<main id="main">
+			<section class="hero container">
+				<h1 class="display-xl hero-name">Your Name</h1>
+				<p class="lead hero-intro" data-reveal>Product designer turning messy workflows into calm, usable products. Currently at Company name.</p>
+				<p class="hero-meta small-text" data-reveal><span class="status-dot" aria-hidden="true"></span>Open to new roles from January 2027</p>
+			</section>
+
+			<section class="container section" aria-labelledby="work-heading">
+				<h2 class="title-md mb40" id="work-heading">Selected work</h2>
+				<ul class="work-list">
+					<li>
+						<a href="/work/project-one" class="work-item" data-cursor="View case study">
+							<div class="work-cover" data-cover>
+								<img src="/Assets/projects/project-one/cover.svg" alt="Rethinking onboarding for a payments app — cover image" width="1600" height="1000" fetchpriority="high" />
+							</div>
+							<div class="work-info">
+								<h3 class="title-lg work-title">Rethinking onboarding for a payments app</h3>
+								<p class="work-meta">Company name, 2025</p>
+								<p class="work-summary">Cut the sign-up flow from 11 steps to 4 and lifted completion for first-time users.</p>
+							</div>
+						</a>
+					</li>
+
+					<li>
+						<a href="/work/project-two" class="work-item" data-cursor="View case study">
+							<div class="work-cover" data-cover>
+								<img src="/Assets/projects/project-two/cover.svg" alt="A design system for six product teams — cover image" width="1600" height="1000" loading="lazy" />
+							</div>
+							<div class="work-info">
+								<h3 class="title-lg work-title">A design system for six product teams</h3>
+								<p class="work-meta">Company name, 2024</p>
+								<p class="work-summary">Built the shared components and tokens that let six teams ship consistent screens faster.</p>
+							</div>
+						</a>
+					</li>
+
+					<li>
+						<a href="/work/project-three" class="work-item" data-cursor="View case study">
+							<div class="work-cover" data-cover>
+								<img src="/Assets/projects/project-three/cover.svg" alt="Making appointment booking work for older patients — cover image" width="1600" height="1000" loading="lazy" />
+							</div>
+							<div class="work-info">
+								<h3 class="title-lg work-title">Making appointment booking work for older patients</h3>
+								<p class="work-meta">Company name, 2023</p>
+								<p class="work-summary">Research-led redesign of a clinic booking flow for people booking on a phone for the first time.</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</section>
+
+			<section class="container section rule-top" aria-labelledby="more-heading">
+				<div class="row">
+					<div class="col-5 col-lg-12">
+						<h2 class="title-xl" id="more-heading" data-reveal>Beyond client work</h2>
+					</div>
+					<div class="col-6 offset-1 col-lg-12 offset-lg-0">
+						<p class="lead c-graphite" data-reveal>Interaction experiments, visual explorations and notes on how I work.</p>
+						<div class="flex g16 flex-wrap mt40" data-reveal>
+							<a href="/playground" class="btn btn-primary">See the playground</a>
+							<a href="/blog/" class="btn btn-outline">Read my writing</a>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<div class="cursor-label" aria-hidden="true"></div>
+
+		<footer class="site-footer">
+			<div class="container">
+				<p class="lead footer-prompt mb24">Have a product that needs a designer?</p>
+				<a href="mailto:hello@yourname.com" class="footer-email">hello@yourname.com</a>
+
+				<ul class="footer-links mt64">
+					<li><a href="https://www.linkedin.com/in/yourname" class="text-link" target="_blank" rel="noopener">LinkedIn</a></li>
+					<li><a href="https://dribbble.com/yourname" class="text-link" target="_blank" rel="noopener">Dribbble</a></li>
+					<li><a href="https://www.behance.net/yourname" class="text-link" target="_blank" rel="noopener">Behance</a></li>
+					<li><a href="/Assets/resume.pdf" class="text-link" target="_blank" rel="noopener">Resume (PDF)</a></li>
+				</ul>
+
+				<div class="footer-bottom flex justify-between flex-wrap g16 small-text">
+					<p>&copy; <span data-year>2026</span> Your Name</p>
+					<p>Designed and built by hand</p>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>

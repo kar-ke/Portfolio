@@ -1,0 +1,33 @@
+/* masonry-style columns: pieces keep their own proportions */
+.playground-grid {
+	columns: 3 280px;
+	column-gap: var(--space-4);
+}
+
+.playground-item {
+	break-inside: avoid;
+	margin-bottom: var(--space-5);
+}
+
+.playground-media {
+	overflow: hidden;
+	border-radius: var(--br-md);
+	background-color: var(--c-paper-100);
+}
+
+.playground-media img,
+.playground-media video {
+	width: 100%;
+	transition: transform var(--slow-trans);
+}
+
+.playground-item:hover .playground-media img { transform: scale(1.03); }
+
+.playground-caption {
+	display: flex;
+	justify-content: space-between;
+	gap: var(--space-3);
+	margin-top: var(--space-3);
+}
+
+.playground-caption span:last-child { color: var(--c-graphite); }

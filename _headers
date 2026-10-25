@@ -1,0 +1,18 @@
+# Cloudflare Pages response headers
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+
+# Fonts never change, so browsers can keep them for a year
+/Assets/Fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images, styles and scripts: cache for a week, then check for a newer copy
+/Assets/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+/Styles/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+/Scripts/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400

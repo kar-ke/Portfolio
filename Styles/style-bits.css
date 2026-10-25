@@ -1,0 +1,25 @@
+/* margin top */
+.mt8 { margin-top: var(--space-2); }
+.mt16 { margin-top: var(--space-3); }
+.mt24 { margin-top: var(--space-4); }
+.mt40 { margin-top: var(--space-5); }
+.mt64 { margin-top: var(--space-6); }
+.mt104 { margin-top: var(--space-7); }
+
+/* margin bottom */
+.mb8 { margin-bottom: var(--space-2); }
+.mb16 { margin-bottom: var(--space-3); }
+.mb24 { margin-bottom: var(--space-4); }
+.mb40 { margin-bottom: var(--space-5); }
+.mb64 { margin-bottom: var(--space-6); }
+
+/* section spacing */
+.section { padding-block: var(--space-7); }
+.section-lg { padding-block: var(--space-8); }
+
+/* misc */
+.relative { position: relative; }
+.overflow-hidden { overflow: hidden; }
+.w-full { width: var(--w-full); }
+.rule-top { border-top: 1px solid var(--c-rule); }
+.rule-bottom { border-bottom: 1px solid var(--c-rule); }

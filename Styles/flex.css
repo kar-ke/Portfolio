@@ -1,0 +1,30 @@
+.flex { display: flex; }
+.flex-row { flex-direction: row; }
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-grow-1 { flex-grow: 1; }
+.flex-shrink-0 { flex-shrink: 0; }
+
+.block { display: block; }
+.inline-block { display: inline-block; }
+.grid { display: grid; }
+
+/* horizontal alignment */
+.justify-start { justify-content: start; }
+.justify-end { justify-content: end; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+
+/* vertical alignment */
+.align-start { align-items: start; }
+.align-end { align-items: end; }
+.align-center { align-items: center; }
+.align-baseline { align-items: baseline; }
+
+/* gap values (follow the spacing scale) */
+.g4 { gap: var(--space-1); }
+.g8 { gap: var(--space-2); }
+.g16 { gap: var(--space-3); }
+.g24 { gap: var(--space-4); }
+.g40 { gap: var(--space-5); }
+.g64 { gap: var(--space-6); }
