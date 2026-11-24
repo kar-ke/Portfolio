@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { ArrowUpRight, Award, X } from 'lucide-react';
+import { Award, X } from 'lucide-react';
 import {
   SELECTED_WORK_PROJECTS,
   type SelectedWorkProject,
@@ -9,6 +9,39 @@ import { ProjectThumbnailFrame } from './ProjectThumbnails';
 
 interface SelectedWorkSectionProps {
   onProjectModalChange?: (open: boolean) => void;
+}
+
+/** Shared purple rounded-square placeholder app icon matching the reference card style. */
+function ProjectCardIcon({ size = 'md' }: { size?: 'sm' | 'md' }) {
+  const isSmall = size === 'sm';
+  return (
+    <span
+      aria-hidden="true"
+      className={[
+        'inline-flex flex-col items-center justify-center shrink-0 select-none text-white',
+        'bg-gradient-to-b from-[#A34EF5] via-[#7A27DF] to-[#5714B6]',
+        'shadow-[inset_0_1px_0_rgba(255,255,255,0.34),0_2px_6px_-2px_rgba(87,20,182,0.42)]',
+        isSmall ? 'h-[20px] w-[20px] rounded-[5.5px]' : 'h-[23px] w-[23px] rounded-[6px]',
+      ].join(' ')}
+    >
+      <span
+        className={[
+          'font-bold tracking-[-0.04em] leading-none',
+          isSmall ? 'text-[5px]' : 'text-[5.8px]',
+        ].join(' ')}
+      >
+        district
+      </span>
+      <span
+        className={[
+          'font-semibold tracking-[0.04em] uppercase opacity-80 leading-none mt-[1px]',
+          isSmall ? 'text-[2.4px]' : 'text-[2.7px]',
+        ].join(' ')}
+      >
+        BY ZOMATO
+      </span>
+    </span>
+  );
 }
 
 export const SelectedWorkSection = memo(function SelectedWorkSection({
@@ -33,7 +66,6 @@ export const SelectedWorkSection = memo(function SelectedWorkSection({
     >
       <div className="w-full max-w-[1140px] mx-auto px-6 sm:px-10 lg:px-12">
         <div className="py-16 sm:py-22 lg:py-26">
-          {/* Section Header — consistent with About me typography */}
           <div className="mb-12 sm:mb-16 lg:mb-20">
             <h2
               id="selected-work-heading"
@@ -43,102 +75,69 @@ export const SelectedWorkSection = memo(function SelectedWorkSection({
             </h2>
           </div>
 
-          {/* 4 Project Showcase Rows matching Reference Composition */}
-          <div className="space-y-16 sm:space-y-20 lg:space-y-24">
+          <div className="space-y-[76px] sm:space-y-[94px] lg:space-y-28">
             {SELECTED_WORK_PROJECTS.map((project) => (
               <article
                 key={project.id}
                 data-testid={`project-card-${project.id}`}
-                className="group grid grid-cols-1 lg:grid-cols-[540px_1fr] items-center gap-8 sm:gap-10 lg:gap-12 xl:gap-16 lg:min-h-[350px]"
+                className="group grid grid-cols-1 lg:grid-cols-[560px_1fr] items-center gap-8 sm:gap-10 lg:gap-14 xl:gap-16 lg:min-h-[392px]"
               >
-                {/* Left Column — Fixed-Dimension Cushioned Bezel + Recessed Inner Shadow Thumbnail */}
-                <div className="w-full sm:w-[540px]">
+                {/* Left Column — Fixed-Dimension 34px Rounded Thumbnail */}
+                <div className="w-full sm:w-[560px]">
                   <button
                     type="button"
                     onClick={() => setActiveProject(project)}
                     aria-label={`Inspect ${project.company} — ${project.title}`}
-                    className="block w-full sm:w-[540px] text-left rounded-[15px] sm:rounded-[19px] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0066CC]"
+                    className="block w-full sm:w-[560px] text-left rounded-[34px] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0066CC]"
                   >
                     <ProjectThumbnailFrame variant={project.thumbnailVariant} />
                   </button>
                 </div>
 
-                {/* Right Column — Inline Icon + Bold Name, Timeline, Airy Summary, Dual Gold Pills, Underlined Link */}
+                {/* Right Column — Exact Reference Typography, Icon & Compact Gold Badge */}
                 <div className="min-w-0 flex flex-col items-start">
-                  {/* Inline App Icon + Bold Project Name */}
-                  <div className="inline-flex items-center gap-2.5 sm:gap-3">
-                    <span
-                      aria-hidden="true"
-                      className={[
-                        'inline-flex h-[28px] w-[28px] items-center justify-center rounded-[7px]',
-                        'text-[10px] font-bold tracking-[-0.02em] leading-none shrink-0',
-                        'shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1px_3px_rgba(17,17,17,0.14)]',
-                        project.brandBgClass,
-                      ].join(' ')}
-                    >
-                      {project.brandMonogram}
+                  <div className="inline-flex items-center gap-2.5">
+                    <ProjectCardIcon />
+                    <span className="font-mono text-[13px] sm:text-[13.5px] font-medium tracking-[0.12em] uppercase text-[#66666B] leading-none">
+                      {project.company}
                     </span>
-                    <h3 className="text-[23px] sm:text-[25px] font-bold tracking-[-0.025em] leading-[1.15] text-[#111111]">
-                      <button
-                        type="button"
-                        onClick={() => setActiveProject(project)}
-                        className="text-left cursor-pointer hover:opacity-75 transition-opacity focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0066CC] rounded-sm"
-                      >
-                        {project.displayName}
-                      </button>
-                    </h3>
                   </div>
 
-                  {/* Date Range */}
-                  <p className="mt-2 text-[14px] sm:text-[14.5px] font-medium tracking-[-0.005em] text-[#76767B]">
-                    {project.timeline}
-                  </p>
+                  <h3 className="mt-3.5 text-[23.5px] sm:text-[27px] font-semibold tracking-[-0.028em] leading-[1.18] text-[#1D1D1F] [text-wrap:balance] max-w-[20ch]">
+                    <button
+                      type="button"
+                      onClick={() => setActiveProject(project)}
+                      className="text-left cursor-pointer hover:opacity-75 transition-opacity focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0066CC] rounded-sm"
+                    >
+                      {project.title}
+                    </button>
+                  </h3>
 
-                  {/* Airy Editorial Summary Paragraph */}
-                  <p className="mt-5 sm:mt-6 text-[16.5px] sm:text-[17.5px] leading-[1.64] tracking-[-0.012em] font-normal text-[#4B4B4F] max-w-[44ch]">
+                  <p className="mt-5 font-figtree text-[16px] leading-[1.64] font-medium text-[#828282] max-w-[44ch]">
                     {project.summary}
                   </p>
 
-                  {/* Dual Warm-Gold Highlight Pills Side-by-Side */}
                   <div
                     data-testid={`project-badges-${project.id}`}
-                    className="mt-6 sm:mt-7 flex flex-wrap items-center gap-2.5"
+                    className="mt-6"
                   >
-                    {project.badges.map((badge, badgeIndex) => (
-                      <span
-                        key={`${project.id}-badge-${badgeIndex}`}
-                        className={[
-                          'inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5',
-                          'bg-gradient-to-b from-[#FFF7D1] to-[#FDE99A]',
-                          'border border-[#E9C75B]/85',
-                          'shadow-[inset_0_1px_0_rgba(255,255,255,0.75),0_2px_8px_-4px_rgba(161,116,10,0.18)]',
-                          'text-[12.5px] sm:text-[13px] font-semibold tracking-[-0.01em] text-[#6B4E08] whitespace-nowrap',
-                        ].join(' ')}
-                      >
-                        <Award
-                          className="w-3.5 h-3.5 shrink-0 text-[#7C590A]"
-                          strokeWidth={1.9}
-                          aria-hidden="true"
-                        />
-                        <span>{badge}</span>
-                      </span>
-                    ))}
+                    <span
+                      className={[
+                        'inline-flex items-center gap-[7px] rounded-full px-[14px] py-[7px]',
+                        'bg-gradient-to-b from-[#FFF7CC] to-[#FCE588]',
+                        'border border-[#ECCB5C]',
+                        'shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_3px_10px_-4px_rgba(161,116,10,0.22)]',
+                        'text-[11.7px] sm:text-[12.2px] font-semibold tracking-[-0.005em] text-[#785306] whitespace-nowrap',
+                      ].join(' ')}
+                    >
+                      <Award
+                        className="w-[13.5px] h-[13.5px] shrink-0 text-[#785306]"
+                        strokeWidth={2}
+                        aria-hidden="true"
+                      />
+                      <span>{project.highlightBadge}</span>
+                    </span>
                   </div>
-
-                  {/* Underlined Action Link with North-East Arrow */}
-                  <button
-                    type="button"
-                    onClick={() => setActiveProject(project)}
-                    data-testid={`project-link-${project.id}`}
-                    className="mt-6 sm:mt-7 inline-flex items-center gap-2 pb-1.5 border-b-[1.5px] border-[#111111] text-[15.5px] sm:text-[16.5px] font-medium tracking-[-0.01em] text-[#111111] hover:opacity-65 transition-opacity cursor-pointer focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0066CC] rounded-[2px]"
-                  >
-                    <span>{project.ctaLabel}</span>
-                    <ArrowUpRight
-                      className="w-4 h-4 shrink-0"
-                      strokeWidth={2}
-                      aria-hidden="true"
-                    />
-                  </button>
                 </div>
               </article>
             ))}
@@ -164,16 +163,8 @@ export const SelectedWorkSection = memo(function SelectedWorkSection({
             <div className="flex items-start justify-between gap-4">
               <div>
                 <div className="inline-flex items-center gap-2">
-                  <span
-                    aria-hidden="true"
-                    className={[
-                      'inline-flex h-[20px] w-[20px] items-center justify-center rounded-[5px] text-[8px] font-bold leading-none',
-                      activeProject.brandBgClass,
-                    ].join(' ')}
-                  >
-                    {activeProject.brandMonogram}
-                  </span>
-                  <span className="text-[12px] font-semibold tracking-[0.14em] uppercase text-[#515154]">
+                  <ProjectCardIcon size="sm" />
+                  <span className="font-mono text-[12px] font-medium tracking-[0.12em] uppercase text-[#66666B]">
                     {activeProject.company}
                   </span>
                 </div>

@@ -1,15 +1,15 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { ChevronsDown } from 'lucide-react';
-import { OTHER_WORLD_COPY, STAMP_DUMMY_IMAGES } from '../../config/hobbies';
+import { OTHER_WORLD_COPY, OTHER_WORLD_STAMPS } from '../../config/hobbies';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 import type { ScrollProgressListener } from '../../hooks/useSmoothScroll';
 import {
   computeDeskViewBox,
   computeFixedDeskMaxScale,
   computeRunwayProgress,
+  computeSequentialStampIndex,
   evaluateOtherWorldFrame,
   OTHER_WORLD_TIMELINE,
-  pickNextRandomStampIndex,
 } from '../../utils/otherWorldTimeline';
 import { OtherWorldDeskSvg } from './OtherWorldDeskSvg';
 import { OtherWorldHobbies } from './OtherWorldHobbies';
@@ -21,8 +21,8 @@ interface OtherWorldTransitionSectionProps {
 
 /**
  * Sticky scroll-driven portal from Selected Work into Personal Hobbies.
- * Animates native SVG `viewBox` (avoiding GPU rasterization blur at high zoom),
- * shuffles dummy stamp photos inside the laptop center, and cross-fades into hobbies.
+ * Zooms smoothly into the centered tilted stamp while cycling provided stamps
+ * sequentially (01 -> 02 -> 03) on loop until zoom completes, then dissolves into hobbies.
  */
 export const OtherWorldTransitionSection = memo(function OtherWorldTransitionSection({
   subscribeScrollProgress,
@@ -37,14 +37,12 @@ export const OtherWorldTransitionSection = memo(function OtherWorldTransitionSec
   const deskStageRef = useRef<HTMLDivElement | null>(null);
   const deskSvgRef = useRef<SVGSVGElement | null>(null);
   const sceneTextRef = useRef<SVGGElement | null>(null);
-  const screenInnerRef = useRef<SVGGElement | null>(null);
   const stampGroupRef = useRef<SVGGElement | null>(null);
   const stampImageRefs = useRef<(SVGImageElement | null)[]>([]);
   const scrollCueRef = useRef<HTMLDivElement | null>(null);
   const hobbiesLayerRef = useRef<HTMLDivElement | null>(null);
 
   const activeStampIndexRef = useRef<number>(0);
-  const lastStampBucketRef = useRef<number>(0);
   const lastProgressRef = useRef<number>(-1);
   const viewportRef = useRef<{ width: number; height: number }>({
     width: typeof window !== 'undefined' ? window.innerWidth : 1440,
@@ -96,27 +94,12 @@ export const OtherWorldTransitionSection = memo(function OtherWorldTransitionSec
           `${box.x.toFixed(2)} ${box.y.toFixed(2)} ${box.width.toFixed(2)} ${box.height.toFixed(2)}`,
         );
         deskSvgRef.current.style.opacity = String(frame.deskOpacity);
-        deskSvgRef.current.style.setProperty('--desk-stroke', frame.deskStrokeWidthPx.toFixed(2));
       }
 
-      // Cycle random dummy photos inside the tilted stamp during active zoom
-      if (progress <= 0.015) {
-        if (activeStampIndexRef.current !== 0 || lastStampBucketRef.current !== 0) {
-          lastStampBucketRef.current = 0;
-          setVisibleStampImage(0);
-        }
-      } else if (progress < OTHER_WORLD_TIMELINE.screenContentFadeEnd) {
-        const bucket = Math.floor(progress / OTHER_WORLD_TIMELINE.stampShuffleStep);
-        if (bucket !== lastStampBucketRef.current) {
-          lastStampBucketRef.current = bucket;
-          setVisibleStampImage(
-            pickNextRandomStampIndex(activeStampIndexRef.current, STAMP_DUMMY_IMAGES.length),
-          );
-        }
-      }
-
-      if (screenInnerRef.current) {
-        screenInnerRef.current.style.opacity = String(frame.screenContentOpacity);
+      // Cycle stamps sequentially (01 -> 02 -> 03) on loop until zoom completes at zoomEnd
+      const nextStampIdx = computeSequentialStampIndex(progress, OTHER_WORLD_STAMPS.length);
+      if (nextStampIdx !== activeStampIndexRef.current) {
+        setVisibleStampImage(nextStampIdx);
       }
 
       if (deskStageRef.current) {
@@ -186,7 +169,7 @@ export const OtherWorldTransitionSection = memo(function OtherWorldTransitionSec
             <OtherWorldDeskSvg
               showSceneText
               compactLayout={compactLayout}
-              viewBox={compactLayout ? '0 -120 360 415' : '-305 10 890 245'}
+              viewBox={compactLayout ? '0 -120 360 415' : '-345 0 1050 250'}
               className="w-full h-auto block"
             />
           </div>
@@ -231,7 +214,6 @@ export const OtherWorldTransitionSection = memo(function OtherWorldTransitionSec
           <OtherWorldDeskSvg
             svgRef={deskSvgRef}
             sceneTextRef={sceneTextRef}
-            screenInnerRef={screenInnerRef}
             stampGroupRef={stampGroupRef}
             stampImageRefs={stampImageRefs}
             showSceneText

@@ -39,17 +39,32 @@ export const OTHER_WORLD_COPY = {
   hobbiesAccent: 'I love to*',
 } as const;
 
+export interface CollectibleStamp {
+  readonly id: string;
+  readonly label: string;
+  readonly src: string;
+}
+
 /**
- * Dummy monochrome images cycled rapidly inside the tilted postage stamp
- * at the center of the laptop screen while zooming.
- * Replace the files in /public/assets/stamp/ or update these paths anytime.
+ * Collectible stamps cycled sequentially (01 -> 02 -> 03) on loop while scrolling
+ * through the "Welcome to my other world" zoom portal.
  */
-export const STAMP_DUMMY_IMAGES: readonly string[] = [
-  '/assets/stamp/stamp-1.jpg',
-  '/assets/stamp/stamp-2.jpg',
-  '/assets/stamp/stamp-3.jpg',
-  '/assets/stamp/stamp-4.jpg',
-  '/assets/stamp/stamp-5.jpg',
+export const OTHER_WORLD_STAMPS: readonly CollectibleStamp[] = [
+  {
+    id: 'stamp-01-og-king',
+    label: '01 — The OG King',
+    src: '/assets/aistudio/The_OG_King_Original_Stamp_e6dd77ab.png',
+  },
+  {
+    id: 'stamp-02-chai-adikkada',
+    label: '02 — Chai Adikkada',
+    src: '/assets/aistudio/Analysis_output_1_be93f6ba.png',
+  },
+  {
+    id: 'stamp-03-eda-mone',
+    label: '03 — Eda Mone !!!',
+    src: '/assets/aistudio/Eda_Mone_Stamp_Design_635b7690.png',
+  },
 ] as const;
 
 export const HOBBY_FOLDERS: readonly HobbyFolder[] = [

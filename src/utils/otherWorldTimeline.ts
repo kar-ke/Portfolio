@@ -1,13 +1,12 @@
 /**
  * Pure deterministic scroll-timeline evaluator for the
- * "Welcome to my other world" -> Desk Zoom -> Personal Hobbies transition.
+ * "Welcome to my other world" -> Hand-Drawn Desk & Laptop Stamp Zoom -> Personal Hobbies transition.
  *
  * Frame choreography:
- *   0.00 -> 0.28 : Flanking titles, sub-captions & scroll cue drift outward and fade out fast.
- *   0.00 -> 0.70 : Vector SVG viewBox zooms smoothly & exponentially into the laptop screen center,
- *                  locking at the fixed target zoom where the laptop bezel frames the viewport.
- *   0.58 -> 0.74 : Inner laptop screen UI box & cursor arrow fade out so the screen clears cleanly.
- *   0.70 -> 0.94 : Zoom holds steady at fixed max scale while the outer laptop bezel dissolves (1 -> 0).
+ *   0.00 -> 0.36 : Fixed monochrome typography zooms with the desk illustration and fades out halfway.
+ *   0.00 -> 0.70 : Native SVG viewBox zooms smoothly into the laptop screen (with the tilted stamp
+ *                  cycling sequentially 01 -> 02 -> 03) until the laptop bezel frames the viewport.
+ *   0.70 -> 0.94 : Zoom holds steady at fixed max scale while the laptop frame dissolves (1 -> 0).
  *   0.72 -> 0.96 : "Beyond pixels and prototypes" hobbies section cross-fades cleanly into view.
  */
 
@@ -44,21 +43,18 @@ export const OTHER_WORLD_TIMELINE = {
   textFadeEnd: 0.36,
   /** Scroll cue ("scroll to dive in") disappears immediately as zoom starts */
   cueFadeEnd: 0.12,
-  /** Inner laptop screen elements (tilted stamp + pointer) clear right before hobbies enter */
-  screenContentFadeStart: 0.62,
-  screenContentFadeEnd: 0.75,
-  /** Desk reaches its fixed target zoom by this progress and locks there */
+  /** Desk zoom reaches fixed laptop-bezel scale by this progress and locks there */
   zoomEnd: 0.7,
-  /** Desk bezel begins fading out right as fixed zoom settles */
+  /** Laptop bezel begins fading out right as fixed zoom settles */
   deskFadeStart: 0.7,
   deskFadeEnd: 0.94,
-  /** Personal hobbies section cross-fades in inside the dissolving laptop frame */
+  /** Personal hobbies section cross-fades in as the zoomed laptop screen dissolves */
   hobbiesFadeStart: 0.72,
   hobbiesFadeEnd: 0.96,
   /** Interactive pointer events enable once hobbies content is visibly readable */
   hobbiesInteractiveThreshold: 0.78,
-  /** Scroll progress step interval triggering a fast random image swap inside the tilted stamp */
-  stampShuffleStep: 0.022,
+  /** Scroll progress step advancing to the next stamp inside the laptop screen */
+  stampLoopStep: 0.075,
 } as const;
 
 export const DESK_SVG_METRICS = {
@@ -66,10 +62,11 @@ export const DESK_SVG_METRICS = {
   fullHeight: 250,
   deskCenterX: 180,
   deskCenterY: 125,
-  laptopCenterX: 166,
-  laptopCenterY: 88,
-  laptopBezelWidth: 140,
-  laptopBezelHeight: 88,
+  /** Focal zoom target locked strictly to the center of the hand-drawn laptop screen */
+  laptopCenterX: 168,
+  laptopCenterY: 78,
+  laptopScreenWidth: 118,
+  laptopScreenHeight: 72,
 } as const;
 
 export function clamp01(value: number): number {
@@ -83,18 +80,21 @@ export function remap01(value: number, start: number, end: number): number {
 }
 
 /**
- * Picks a random stamp image index guaranteed not to repeat currentIndex
- * (when count > 1) so every zoom step feels like a crisp rapid flip.
+ * Deterministically cycles stamps one by one in order (0 -> 1 -> 2 -> 0 ...)
+ * across the active scroll zoom [0, zoomEnd], holding on the final active stamp
+ * once zoom finishes so dissolve stays steady.
  */
-export function pickNextRandomStampIndex(
-  currentIndex: number,
+export function computeSequentialStampIndex(
+  rawProgress: number,
   count: number,
-  randomValue = Math.random(),
+  zoomEnd: number = OTHER_WORLD_TIMELINE.zoomEnd,
+  step: number = OTHER_WORLD_TIMELINE.stampLoopStep,
 ): number {
   if (count <= 1) return 0;
-  const safeCurrent = ((Math.floor(currentIndex) % count) + count) % count;
-  const offset = 1 + Math.floor(clamp01(randomValue * 0.999999) * (count - 1));
-  return (safeCurrent + offset) % count;
+  const clamped = Math.max(0, Math.min(zoomEnd, clamp01(rawProgress)));
+  if (clamped <= 0 || step <= 0) return 0;
+  const stepIndex = Math.floor(clamped / step);
+  return stepIndex % count;
 }
 
 /** Smooth cubic in-out easing for natural optical camera push */
@@ -116,7 +116,7 @@ export function easeOutQuad(t: number): number {
 }
 
 /**
- * Returns the desired resting pixel width of the desk illustration (+10% larger overall)
+ * Returns the desired resting pixel width of the central stage (+10% larger overall)
  * balanced for the unified desktop flanking lockup and compact mobile layout.
  */
 export function getRestingDeskWidthPx(viewportWidth: number): number {
@@ -128,8 +128,7 @@ export function getRestingDeskWidthPx(viewportWidth: number): number {
 
 /**
  * Computes the exact native SVG viewBox for any eased zoomProgress in [0, 1].
- * Uses exponential magnification so the zoom feels perceptually smooth and uniform,
- * while remaining 100% vector-sharp at viewport resolution (zero GPU bitmap blur).
+ * Exponential magnification produces uniform perceived zoom speed into the stamp center.
  */
 export function computeDeskViewBox(
   viewportWidth: number,
@@ -141,21 +140,17 @@ export function computeDeskViewBox(
   const aspect = safeW / safeH;
   const restingDeskPx = getRestingDeskWidthPx(safeW);
 
-  // Start viewBox: full desk renders at exact restingDeskPx centered in the viewport
   const startWidth = DESK_SVG_METRICS.fullWidth * (safeW / restingDeskPx);
-  const startHeight = startWidth / aspect;
 
-  // End viewBox (fixed max zoom): 140x88 laptop bezel frames ~88% width / ~84% height cleanly
-  const endWidthForW = DESK_SVG_METRICS.laptopBezelWidth / 0.88;
-  const endWidthForH = (DESK_SVG_METRICS.laptopBezelHeight / 0.84) * aspect;
+  // At fixed max zoom, the hand-drawn laptop bezel frames the viewport cleanly
+  const endWidthForW = DESK_SVG_METRICS.laptopScreenWidth / 0.83;
+  const endWidthForH = (DESK_SVG_METRICS.laptopScreenHeight / 0.81) * aspect;
   const endWidth = Math.max(endWidthForW, endWidthForH);
 
-  // Exponential camera push for uniform perceived speed
   const z = clamp01(zoomProgress);
   const width = startWidth * Math.pow(endWidth / startWidth, z);
   const height = width / aspect;
 
-  // Shift center linearly in zoom-space so laptop screen converges smoothly to exact dead-center
   const centerBlend = startWidth === endWidth ? 1 : (startWidth - width) / (startWidth - endWidth);
   const cx =
     DESK_SVG_METRICS.deskCenterX +
@@ -172,9 +167,7 @@ export function computeDeskViewBox(
   };
 }
 
-/**
- * Computes the effective magnification ratio between start and fixed max zoom.
- */
+/** Computes the effective magnification ratio between resting state and fixed max zoom. */
 export function computeFixedDeskMaxScale(
   viewportWidth: number,
   viewportHeight: number,
@@ -184,10 +177,7 @@ export function computeFixedDeskMaxScale(
   return startBox.width / endBox.width;
 }
 
-/**
- * Computes normalized sticky runway progress [0, 1] from container top rect
- * and scrollable runway distance.
- */
+/** Computes normalized sticky runway progress [0, 1] from container top rect and runway height. */
 export function computeRunwayProgress(
   runwayTopPx: number,
   runwayHeightPx: number,
@@ -198,10 +188,7 @@ export function computeRunwayProgress(
   return clamp01(-runwayTopPx / scrollableDistance);
 }
 
-/**
- * Evaluates all visual transform & opacity properties for a given normalized
- * scroll progress in [0, 1].
- */
+/** Evaluates all visual transform & opacity properties for normalized scroll progress [0, 1]. */
 export function evaluateOtherWorldFrame(
   rawProgress: number,
   fixedMaxScale: number,
@@ -226,7 +213,7 @@ export function evaluateOtherWorldFrame(
 
   const progress = clamp01(rawProgress);
 
-  // 1. Fixed scene text stays locked to the desk (zero separate drift) and fades cleanly by halfway through zoom
+  // 1. Fixed scene text zooms with the stamp and fades cleanly out halfway through zoom
   const textT = remap01(
     progress,
     OTHER_WORLD_TIMELINE.textFadeStart,
@@ -235,34 +222,26 @@ export function evaluateOtherWorldFrame(
   const textOpacity = 1 - easeOutQuad(textT);
   const textSpreadPx = 0;
 
-  // 2. Bottom "scroll to dive in" cue fades out right away
+  // 2. Bottom scroll cue fades out immediately as zoom starts
   const cueT = remap01(progress, 0, OTHER_WORLD_TIMELINE.cueFadeEnd);
   const cueOpacity = 1 - easeOutQuad(cueT);
 
-  // 3. Smooth, deliberately paced zoom into the laptop screen until zoomEnd (0.70), then locked
+  // 3. Smooth optical zoom into the centered stamp until zoomEnd (0.70), then locked
   const zoomT = remap01(progress, 0, OTHER_WORLD_TIMELINE.zoomEnd);
   const zoomProgress = easeInOutCubic(zoomT);
   const deskScale = Math.pow(fixedMaxScale, zoomProgress);
-  // Crisp vector stroke thickens subtly as the camera enters the laptop bezel (1.85px -> 3.1px)
-  const deskStrokeWidthPx = 1.85 + zoomProgress * 1.25;
+  const deskStrokeWidthPx = 1.85;
 
-  // 4. Inner laptop screen details (rounded box + pointer) clear right before hobbies fade in
-  const screenFadeT = remap01(
-    progress,
-    OTHER_WORLD_TIMELINE.screenContentFadeStart,
-    OTHER_WORLD_TIMELINE.screenContentFadeEnd,
-  );
-  const screenContentOpacity = 1 - easeOutQuad(screenFadeT);
-
-  // 5. Outer laptop bezel holds opacity 1 while zooming, then dissolves gently at fixed zoom (0.70 -> 0.94)
+  // 4. Stamp stays at full opacity throughout zoom, then dissolves gently at fixed zoom (0.70 -> 0.94)
   const deskFadeT = remap01(
     progress,
     OTHER_WORLD_TIMELINE.deskFadeStart,
     OTHER_WORLD_TIMELINE.deskFadeEnd,
   );
   const deskOpacity = 1 - easeInOutCubic(deskFadeT);
+  const screenContentOpacity = deskOpacity;
 
-  // 6. Personal hobbies section cross-fades cleanly into the dissolving laptop bezel (0.72 -> 0.96)
+  // 5. Personal hobbies section cross-fades cleanly in as the zoomed stamp dissolves (0.72 -> 0.96)
   const hobbiesT = remap01(
     progress,
     OTHER_WORLD_TIMELINE.hobbiesFadeStart,

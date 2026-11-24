@@ -55,6 +55,6 @@ npm run test       # Run pure logic unit tests
 ## Customization
 
 - **Copy, Links & Projects**: Edit `src/config/portfolio.ts`.
-- **Tilted Stamp Photos**: Replace `public/assets/stamp/stamp-1.jpg` through `stamp-5.jpg` (or update `STAMP_DUMMY_IMAGES` in `src/config/hobbies.ts`).
+- **Collectible Stamps**: Edit `OTHER_WORLD_STAMPS` in `src/config/hobbies.ts` to add, reorder, or swap stamp PNGs cycled on scroll.
 - **Hobbies Folders & Cards**: Edit `HOBBY_FOLDERS` in `src/config/hobbies.ts`.
 - **Motion Performance**: Scroll-driven animations (`DynamicNavbar`, `OtherWorldTransitionSection`) subscribe directly to `useSmoothScroll`'s single `requestAnimationFrame` loop and update DOM styles/SVG `viewBox` without triggering per-frame React re-renders. All motion respects `prefers-reduced-motion`.

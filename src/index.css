@@ -3,6 +3,8 @@
 @theme {
   --font-sans: "Satoshi", "Helvetica Neue", Helvetica, Arial, "Noto Sans Tamil", "Noto Sans Devanagari", "Noto Sans Malayalam", "Noto Sans Kannada", "Noto Sans Telugu", "Noto Sans JP", sans-serif;
   --font-serif: "Playfair Display", Georgia, "Noto Sans Tamil", "Noto Sans Devanagari", "Noto Sans Malayalam", "Noto Sans Kannada", "Noto Sans Telugu", "Noto Sans JP", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-figtree: "Figtree", "Satoshi", "Helvetica Neue", Arial, sans-serif;
   --font-handwriting: "Caveat", cursive;
 }
 

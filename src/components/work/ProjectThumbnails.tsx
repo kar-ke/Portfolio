@@ -5,7 +5,7 @@ interface ProjectThumbnailFrameProps {
   variant: ProjectThumbnailVariant;
 }
 
-/** Cushioned outer bezel with recessed inner shadow framing each project preview. */
+/** Fixed-size showcase container framing each project preview with reference 34px radius and crisp hairline border. */
 export const ProjectThumbnailFrame = memo(function ProjectThumbnailFrame({
   variant,
 }: ProjectThumbnailFrameProps) {
@@ -20,30 +20,17 @@ export const ProjectThumbnailFrame = memo(function ProjectThumbnailFrame({
     <div
       data-testid={`project-thumbnail-${variant}`}
       className={[
-        'relative w-full max-w-[540px] h-[230px] sm:w-[540px] sm:h-[350px] shrink-0 select-none',
-        'rounded-[15px] sm:rounded-[19px]',
-        'p-[5px] sm:p-[6px]',
-        'bg-[#F1F1F3]/95 border border-black/[0.045]',
-        'shadow-[0_12px_30px_-18px_rgba(17,17,17,0.16),inset_0_1px_0_rgba(255,255,255,0.92)]',
+        'relative w-full max-w-[560px] h-[250px] sm:w-[560px] sm:h-[392px] shrink-0 select-none overflow-hidden',
+        'rounded-[34px] border border-black/[0.08]',
+        surfaceGradient[variant],
         'transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
         'group-hover:-translate-y-1',
       ].join(' ')}
     >
-      {/* Inner clipped showcase surface with crisp border + recessed inner shadow */}
-      <div
-        className={[
-          'relative h-full w-full overflow-hidden rounded-[10px] sm:rounded-[13px]',
-          'border border-black/[0.06]',
-          surfaceGradient[variant],
-          'after:pointer-events-none after:absolute after:inset-0 after:rounded-[10px] sm:after:rounded-[13px]',
-          'after:shadow-[inset_0_4px_12px_rgba(17,17,17,0.08),inset_0_0_0_1px_rgba(17,17,17,0.045)]',
-        ].join(' ')}
-      >
-        {variant === 'getset11' && <GetSet11Preview />}
-        {variant === 'sciflare' && <SciflarePreview />}
-        {variant === 'invictus11' && <Invictus11Preview />}
-        {variant === 'deductiveclouds' && <DeductiveCloudsPreview />}
-      </div>
+      {variant === 'getset11' && <GetSet11Preview />}
+      {variant === 'sciflare' && <SciflarePreview />}
+      {variant === 'invictus11' && <Invictus11Preview />}
+      {variant === 'deductiveclouds' && <DeductiveCloudsPreview />}
     </div>
   );
 });

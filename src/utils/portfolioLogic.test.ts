@@ -39,15 +39,15 @@ import {
   TOTAL_CYCLE_DURATION_MS,
   type HeroCursorAnchors,
 } from './figmaCursorTimeline';
-import { HOBBY_FOLDERS, OTHER_WORLD_COPY } from '../config/hobbies';
+import { HOBBY_FOLDERS, OTHER_WORLD_COPY, OTHER_WORLD_STAMPS } from '../config/hobbies';
 import {
   computeDeskViewBox,
   computeFixedDeskMaxScale,
   computeRunwayProgress,
+  computeSequentialStampIndex,
   DESK_SVG_METRICS,
   evaluateOtherWorldFrame,
   OTHER_WORLD_TIMELINE,
-  pickNextRandomStampIndex,
 } from './otherWorldTimeline';
 
 test('MULTILINGUAL_GREETINGS, NAV_LINKS, and contact details match requested configuration', () => {
@@ -325,11 +325,11 @@ test('SELECTED_WORK_PROJECTS provides 4 authentic projects with complete case st
   }
 });
 
-test('Other World scroll timeline fades text fast, locks desk at fixed zoom, then cross-fades hobbies', () => {
+test('Other World scroll timeline zooms hand-drawn desk into laptop screen, loops stamps 01->02->03 until zoomEnd, then cross-fades hobbies', () => {
   const maxScale = computeFixedDeskMaxScale(1440, 900);
-  assert.ok(maxScale >= 6 && maxScale <= 10.5, `Expected realistic desktop max scale, got ${maxScale}`);
+  assert.ok(maxScale >= 6.0 && maxScale <= 12.0, `Expected crisp laptop-bezel max scale, got ${maxScale}`);
 
-  // Native SVG viewBox converges onto exact laptop center at zoomProgress = 1
+  // Native SVG viewBox centers on desk at rest and shifts smoothly onto laptop screen at max zoom
   const startBox = computeDeskViewBox(1440, 900, 0);
   const endBox = computeDeskViewBox(1440, 900, 1);
   assert.ok(Math.abs(startBox.x + startBox.width / 2 - DESK_SVG_METRICS.deskCenterX) < 0.01);
@@ -343,17 +343,16 @@ test('Other World scroll timeline fades text fast, locks desk at fixed zoom, the
   assert.equal(start.textSpreadPx, 0);
   assert.equal(start.cueOpacity, 1);
   assert.equal(start.deskScale, 1);
-  assert.equal(start.screenContentOpacity, 1);
   assert.equal(start.deskOpacity, 1);
   assert.equal(start.hobbiesOpacity, 0);
   assert.equal(start.hobbiesInteractive, false);
 
-  // Frame 2 (Quarter zoom: text stays fixed with zero separate spread while softly fading)
+  // Quarter zoom: text stays fixed with zero separate spread while softly fading
   const quarterZoom = evaluateOtherWorldFrame(0.18, maxScale, false);
   assert.equal(quarterZoom.textSpreadPx, 0);
   assert.ok(quarterZoom.textOpacity > 0.1 && quarterZoom.textOpacity < 0.8);
 
-  // Frame 3 (Halfway through zoom: text completely faded out while desk keeps zooming at full opacity)
+  // Halfway through zoom: text faded out while stamp keeps zooming at full opacity
   const afterTextFade = evaluateOtherWorldFrame(OTHER_WORLD_TIMELINE.textFadeEnd, maxScale, false);
   assert.equal(afterTextFade.textOpacity, 0);
   assert.equal(afterTextFade.textSpreadPx, 0);
@@ -362,17 +361,16 @@ test('Other World scroll timeline fades text fast, locks desk at fixed zoom, the
   assert.equal(afterTextFade.deskOpacity, 1);
   assert.equal(afterTextFade.hobbiesOpacity, 0);
 
-  // Frame 5-6 (Fixed zoom locked at zoomEnd = 0.70, inner screen cleared, outer bezel dissolves)
+  // Fixed zoom locked at zoomEnd = 0.70 while stamp dissolves into hobbies
   const atFixedZoom = evaluateOtherWorldFrame(OTHER_WORLD_TIMELINE.zoomEnd, maxScale, false);
   const duringDissolve = evaluateOtherWorldFrame(0.84, maxScale, false);
   assert.equal(atFixedZoom.deskScale, maxScale);
   assert.equal(duringDissolve.deskScale, maxScale, 'Zoom must remain locked at fixed scale during fade-out');
-  assert.equal(duringDissolve.screenContentOpacity, 0, 'Inner screen elements should clear before hobbies peak');
   assert.ok(duringDissolve.deskOpacity > 0 && duringDissolve.deskOpacity < 1);
   assert.ok(duringDissolve.hobbiesOpacity > 0 && duringDissolve.hobbiesOpacity < 1);
   assert.equal(duringDissolve.hobbiesInteractive, true);
 
-  // Frame 7 (Complete reveal at progress = 1)
+  // Complete reveal at progress = 1
   const end = evaluateOtherWorldFrame(1, maxScale, false);
   assert.equal(end.deskScale, maxScale);
   assert.equal(end.deskOpacity, 0);
@@ -391,22 +389,25 @@ test('Other World scroll timeline fades text fast, locks desk at fixed zoom, the
   assert.equal(reduced.hobbiesOpacity, 1);
   assert.equal(reduced.hobbiesInteractive, true);
 
-  // Exact reference copy & 3 hobby folders each with 3 cards
+  // Exact copy, 3 ordered stamps, and 3 hobby folders
   assert.equal(OTHER_WORLD_COPY.leftLine1, 'Welcome');
   assert.equal(OTHER_WORLD_COPY.rightLine1, 'to my');
   assert.equal(OTHER_WORLD_COPY.leftLine2, 'other');
   assert.equal(OTHER_WORLD_COPY.rightLine2, 'world');
   assert.equal(OTHER_WORLD_COPY.leftSubtitle, 'Off the screen,');
   assert.equal(OTHER_WORLD_COPY.rightSubtitle, 'still very much me');
+  assert.equal(OTHER_WORLD_STAMPS.length, 3);
   assert.equal(HOBBY_FOLDERS.length, 3);
   assert.ok(HOBBY_FOLDERS.every((f) => f.cards.length === 3));
 
-  // Rapid random stamp photo picker never repeats the immediately preceding image
-  for (let current = 0; current < 5; current += 1) {
-    for (const rand of [0, 0.25, 0.5, 0.75, 0.999]) {
-      const next = pickNextRandomStampIndex(current, 5, rand);
-      assert.notEqual(next, current);
-      assert.ok(next >= 0 && next < 5);
-    }
-  }
+  // Sequential one-by-one stamp loop (0 -> 1 -> 2 -> 0 ...) across zoom, then holds at zoomEnd
+  const step = OTHER_WORLD_TIMELINE.stampLoopStep;
+  assert.equal(computeSequentialStampIndex(0, 3), 0);
+  assert.equal(computeSequentialStampIndex(step * 1.1, 3), 1);
+  assert.equal(computeSequentialStampIndex(step * 2.1, 3), 2);
+  assert.equal(computeSequentialStampIndex(step * 3.1, 3), 0);
+  assert.equal(
+    computeSequentialStampIndex(0.9, 3),
+    computeSequentialStampIndex(OTHER_WORLD_TIMELINE.zoomEnd, 3),
+  );
 });
